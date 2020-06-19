@@ -13,4 +13,4 @@ COPY . /app/
 RUN cabal new-build
 
 # run using cabal
-ENTRYPOINT ["cabal", "new-run"]
+CMD ["cabal", "new-run"]
