@@ -5,25 +5,32 @@ module Main where
 
 import Telegram.Bot.API ( Token, Update, defaultTelegramClientEnv )
 import Telegram.Bot.Simple
+import Telegram.Bot.Simple.UpdateParser ( updateMessageText )
 
-import Xkcdify
+import qualified Data.Text as T
+
+import Xkcdify ( xkcdify )
 
 type Model = ()
 data Action = Reply String | Noop deriving Show
 
 handleUpdate :: Update -> Model -> Maybe Action
-handleUpdate _ _ = Nothing
+handleUpdate update _ = case updateMessageText update of
+    Just cs -> Reply <$> (xkcdify . T.unpack) cs
+    Nothing -> Nothing
 
 handleAction :: Action -> Model -> Eff Action Model
-handleAction _ _ = undefined
+handleAction (Reply cs) model =
+    model <# ((replyText $ T.pack cs) >> return Noop)
+handleAction (Noop)     model = pure model
 
 xkcdbot :: BotApp Model Action
 xkcdbot = BotApp
-  { botInitialModel = ()
-  , botAction = handleUpdate
-  , botHandler = handleAction
-  , botJobs = []
-  }
+    { botInitialModel = ()
+    , botAction       = handleUpdate
+    , botHandler      = handleAction
+    , botJobs         = []
+    }
 
 run :: Token -> IO ()
 run token = do
