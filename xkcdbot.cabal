@@ -7,7 +7,6 @@ author: Chua Hou
 maintainer: human+github@chuahou.dev
 copyright: Copyright (c) 2020 Chua Hou
 build-type: Simple
-extra-source-files: CHANGELOG.md
 cabal-version: >= 2.0
 
 executable xkcdbot
