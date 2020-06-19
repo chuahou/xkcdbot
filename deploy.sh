@@ -47,5 +47,5 @@ deploy ()
 	git branch -D heroku
 }
 
-#build
+build
 deploy
