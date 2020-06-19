@@ -67,8 +67,9 @@ Dependencies
 
 * `Telegram API <https://hackage.haskell.org/package/telegram-api>`_
 * Build was done using:
-	* ghc 8.6.5
-	* cabal 2.4.0.0
+
+  * ghc 8.6.5
+  * cabal 2.4.0.0
 
 .. |License: MIT| image:: https://img.shields.io/badge/License-MIT-yellow.svg
 	:target: https://opensource.org/licenses/MIT
