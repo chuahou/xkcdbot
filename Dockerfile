@@ -3,7 +3,7 @@ FROM ubuntu:latest
 # install haskell
 RUN apt-get update
 RUN apt-get install haskell-platform -y
-RUN cabal update
+RUN cabal new-update
 
 # copy code
 WORKDIR /app
