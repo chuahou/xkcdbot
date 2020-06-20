@@ -37,9 +37,9 @@ USER haskelluser
 RUN mkdir -p ~/.ghcup/bin
 RUN curl https://downloads.haskell.org/~ghcup/x86_64-linux-ghcup > ~/.ghcup/bin/ghcup
 RUN chmod +x ~/.ghcup/bin/ghcup
-RUN ghcup install 8.6.5
-RUN ghcup set 8.6.5
-RUN ghcup install-cabal 2.4.1.0
+RUN ghcup install ${GHC_VER}
+RUN ghcup set ${GHC_VER}
+RUN ghcup install-cabal ${CABAL_VER}
 
 # copy only cabal file to install dependencies
 RUN cabal update
