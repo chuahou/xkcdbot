@@ -4,7 +4,7 @@ FROM heroku/heroku:18
 
 # version configuration
 ARG GHC_VER=8.6.5
-ARG CABAL_VER=2.4.0.0
+ARG CABAL_VER=2.4.1.0
 
 # user to install for
 ENV PATH="/home/haskelluser/.cabal/bin:/home/haskelluser/.ghcup/bin:${PATH}"
