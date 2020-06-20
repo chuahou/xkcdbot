@@ -38,38 +38,27 @@ word, it will "xkcdify" it. For example,
 
 .. image:: example.png
 
+For more information on requirements, try checking the `Dockerfile
+<Dockerfile>`_.
+
 Deployment
 ==========
 
-To deploy to Heroku, please enjoy the `most disgusting setup script
-<deploy.sh>`_. First, ensure that you have the ``heroku`` remote set up
-to point at your Heroku app (use the Heroku CLI to do this), and add the
-official nodejs buildpack in the app settings.
-
-Make sure the variables ``LIBRARY_DIR`` and ``LIBRARIES`` in
-``deploy.sh`` are correct for your system. Then, run
+To deploy to Heroku, use the preconfigured Dockerfile and heroku.yml.
+Create an app as per usual and set it up as a remote, then
 
 ::
 
-	./deploy.sh
+	heroku stack:set container
+	git push heroku master
 
 and set ``TELEGRAM_BOT_TOKEN`` as a config var to your Telegram bot API
 token in your Heroku app's settings.
-
-Due to issues with building this directly on Heroku, I opted to do the
-extremely disgusting deployment method of building locally, committing
-the binaries and using a dummy ``package.json`` to trick the nodejs
-buildpack into doing nothing. `See more here
-<https://github.com/yesodweb/yesod/wiki/Deploying-Yesod-Apps-to-Heroku>`_.
 
 Dependencies
 ============
 
 * `Telegram API <https://hackage.haskell.org/package/telegram-api>`_
-* Build was done using:
-
-  * ghc 8.6.5
-  * cabal 2.4.0.0
 
 .. |License: MIT| image:: https://img.shields.io/badge/License-MIT-yellow.svg
 	:target: https://opensource.org/licenses/MIT
