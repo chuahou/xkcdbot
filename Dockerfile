@@ -7,12 +7,10 @@ ARG GHC_VER=8.6.5
 ARG CABAL_VER=2.4.0.0
 
 # user to install for
-ARG USER=user
-ARG GROUP=group
-ENV PATH="/home/${USER}/.cabal/bin:/home/${USER}/.ghcup/bin:${PATH}"
-RUN useradd -ms /bin/bash ${USER} && \
-	groupadd ${GROUP} && \
-	usermod -a -G ${GROUP} ${USER}
+ENV PATH="/home/haskelluser/.cabal/bin:/home/haskelluser/.ghcup/bin:${PATH}"
+RUN useradd -ms /bin/bash haskelluser && \
+	groupadd haskellgroup && \
+	usermod -a -G haskellgroup haskelluser
 
 # install dependencies
 RUN apt-get update
@@ -29,11 +27,11 @@ RUN apt-get install \
 	-y
 
 # working dir is /app
-WORKDIR /home/${USER}/app
-RUN chown ${USER} /home/${USER}/app
+WORKDIR /home/haskelluser/app
+RUN chown haskelluser /home/haskelluser/app
 
 # use user account to do ghcup
-USER ${USER}
+USER haskelluser
 
 # install haskell
 RUN mkdir -p ~/.ghcup/bin
@@ -45,11 +43,11 @@ RUN ghcup install-cabal 2.4.1.0
 
 # copy only cabal file to install dependencies
 RUN cabal update
-COPY --chown=${USER}:${GROUP} ./*.cabal /home/${USER}/app/
+COPY --chown=haskelluser:haskellgroup ./*.cabal /home/haskelluser/app/
 RUN cabal install --only-dependencies -j4
 
 # add and install application
-COPY --chown=${USER}:${GROUP} . /home/${USER}/app
+COPY --chown=haskelluser:haskellgroup . /home/haskelluser/app
 RUN cabal install
 
 # run
