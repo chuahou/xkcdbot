@@ -8,8 +8,11 @@ ARG CABAL_VER=2.4.0.0
 
 # user to install for
 ARG USER=user
+ARG GROUP=group
 ENV PATH="/home/${USER}/.cabal/bin:/home/${USER}/.ghcup/bin:${PATH}"
-RUN useradd -ms /bin/bash ${USER}
+RUN useradd -ms /bin/bash ${USER} && \
+	groupadd ${GROUP} && \
+	usermod -a -G ${GROUP} ${USER}
 
 # install dependencies
 RUN apt-get update
@@ -42,11 +45,11 @@ RUN ghcup install-cabal 2.4.1.0
 
 # copy only cabal file to install dependencies
 RUN cabal update
-COPY --chown=${USER}:${USER} ./*.cabal /home/${USER}/app/
+COPY --chown=${USER}:${GROUP} ./*.cabal /home/${USER}/app/
 RUN cabal install --only-dependencies -j4
 
 # add and install application
-COPY --chown=${USER}:${USER} . /home/${USER}/app
+COPY --chown=${USER}:${GROUP} . /home/${USER}/app
 RUN cabal install
 
 # run
