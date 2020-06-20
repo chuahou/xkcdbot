@@ -42,11 +42,11 @@ RUN ghcup install-cabal 2.4.1.0
 
 # copy only cabal file to install dependencies
 RUN cabal update
-COPY ./*.cabal /home/${USER}/app/
+COPY --chown=${USER}:${USER} ./*.cabal /home/${USER}/app/
 RUN cabal install --only-dependencies -j4
 
 # add and install application
-COPY . /home/${USER}/app
+COPY --chown=${USER}:${USER} . /home/${USER}/app
 RUN cabal install
 
 # run
