@@ -1,5 +1,5 @@
 name: xkcdbot
-version: 0.1.0
+version: 0.1.1
 synopsis: Simple Telegram bot that does xkcd37
 license: MIT
 license-file: LICENSE
