@@ -10,8 +10,9 @@ assify :: [String] -> Maybe [String]
 assify []   = Nothing
 assify [cs] = Nothing
 assify (cs:ds:css)
-    | endcs == ass = Just [prunehyp startcs, ass ++ (hyphen:ds)]
-    | otherwise    = assify (ds:css)
+    | cs `elem` ignore = assify (ds:css)
+    | endcs == ass     = Just [prunehyp startcs, ass ++ (hyphen:ds)]
+    | otherwise        = assify (ds:css)
         where (startcs, endcs) = splitAt (length cs - length ass) cs
               prunehyp ""     = ""
               prunehyp (c:"") | c == hyphen = ""
@@ -25,3 +26,15 @@ ass = "ass"
 
 hyphen :: Char
 hyphen = '-'
+
+-- | List of common words ending in ass to ignore
+ignore :: [String]
+ignore = [ "brass"
+         , "class"
+         , "crass"
+         , "glass"
+         , "grass"
+         , "mass"
+         , "pass"
+         , "pass"
+         ]
